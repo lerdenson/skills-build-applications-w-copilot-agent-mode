@@ -33,6 +33,7 @@ export function getTeams(): Promise<Team[]> {
   return getCollection<Team>('/api/teams', 'teams');
 }
 
+
 export function getLeaderboard(): Promise<LeaderboardEntry[]> {
   return getCollection<LeaderboardEntry>('/api/leaderboard', 'leaderboard');
 }
