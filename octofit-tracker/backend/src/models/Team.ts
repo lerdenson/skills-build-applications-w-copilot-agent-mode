@@ -6,7 +6,4 @@ const teamSchema = new Schema({
   members: { type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: [] },
 });
 
-
-
-
 export const Team = model('Team', teamSchema);
