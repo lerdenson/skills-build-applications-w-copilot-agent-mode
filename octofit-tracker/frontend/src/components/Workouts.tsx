@@ -1,8 +1,10 @@
 import { CapabilityCard } from './CapabilityCard.js';
-import { getWorkoutSuggestions, type WorkoutSuggestion } from '../api/client.js';
+import { getCollection, getJson, type WorkoutSuggestion } from '../api/client.js';
 
 const userEmail = 'mona@example.com';
-const loadSuggestions = () => getWorkoutSuggestions(userEmail);
+const loadSuggestions = () =>
+  getJson<Record<string, unknown>>(`/api/workouts/suggestions/${encodeURIComponent(userEmail)}`)
+    .then((response) => getCollection<WorkoutSuggestion>(response, 'suggestions'));
 
 export default function Workouts() {
   return (
