@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import { getJson } from '../api/client.js';
 
 type ApiDataState<T> =
   | { status: 'loading' }
   | { status: 'success'; data: T }
   | { status: 'error'; message: string };
 
-export function useApiData<T>(path: string, responseKey: string): ApiDataState<T[]> {
+export function useApiData<T>(loadData: () => Promise<T[]>): ApiDataState<T[]> {
   const [state, setState] = useState<ApiDataState<T[]>>({ status: 'loading' });
 
   useEffect(() => {
     let active = true;
     setState({ status: 'loading' });
-    void getJson<Record<string, T[]>>(path)
-      .then((response) => {
-        const data = response[responseKey];
-        if (!Array.isArray(data)) throw new Error(`The API response did not include a ${responseKey} list`);
+    void loadData()
+      .then((data) => {
         if (active) setState({ status: 'success', data });
       })
       .catch((error: unknown) => {
@@ -26,7 +23,7 @@ export function useApiData<T>(path: string, responseKey: string): ApiDataState<T
     return () => {
       active = false;
     };
-  }, [path, responseKey]);
+  }, [loadData]);
 
   return state;
 }

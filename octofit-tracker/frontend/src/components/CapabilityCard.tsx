@@ -4,14 +4,13 @@ import { useApiData } from '../hooks/useApiData.js';
 type Props<T> = {
   title: string;
   description: string;
-  path: string;
-  responseKey: string;
+  loadData: () => Promise<T[]>;
   emptyMessage: string;
   renderItem: (item: T) => ReactNode;
 };
 
-export function CapabilityCard<T>({ title, description, path, responseKey, emptyMessage, renderItem }: Props<T>) {
-  const resource = useApiData<T>(path, responseKey);
+export function CapabilityCard<T>({ title, description, loadData, emptyMessage, renderItem }: Props<T>) {
+  const resource = useApiData<T>(loadData);
 
   return (
     <section className="card h-100" aria-busy={resource.status === 'loading'}>

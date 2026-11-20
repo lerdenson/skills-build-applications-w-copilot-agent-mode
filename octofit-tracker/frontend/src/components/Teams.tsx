@@ -1,14 +1,12 @@
 import { CapabilityCard } from './CapabilityCard.js';
-
-type Team = { name: string; mascot?: string; members: string[] };
+import { getTeams, type Team } from '../api/client.js';
 
 export default function Teams() {
   return (
     <CapabilityCard<Team>
       title="Teams"
       description="Manage teams and members."
-      path="/api/teams"
-      responseKey="teams"
+      loadData={getTeams}
       emptyMessage="No teams yet."
       renderItem={(team) => (
         <>

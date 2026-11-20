@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../src/App.js';
@@ -52,7 +53,16 @@ describe('OctoFit presentation contract', () => {
 
   it('requests workout suggestions for a specific user', async () => {
     renderRoute('/workouts');
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/workouts\/suggestions\/mona(%40|@)example\.com$/)));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/workouts\/suggestions\/mona%40example\.com$/)));
+  });
+
+  it('navigates between capability views using the section links', async () => {
+    const user = userEvent.setup();
+    renderRoute('/activities');
+    await user.click(screen.getByRole('link', { name: 'Teams' }));
+    expect(await screen.findByRole('heading', { name: 'Teams' })).toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: 'Leaderboard' }));
+    expect(await screen.findByRole('heading', { name: 'Leaderboard' })).toBeInTheDocument();
   });
 
   for (const capability of capabilities) {
