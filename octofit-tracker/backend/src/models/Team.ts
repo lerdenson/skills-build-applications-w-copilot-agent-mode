@@ -7,4 +7,6 @@ const teamSchema = new Schema({
 });
 
 
+
+
 export const Team = model('Team', teamSchema);
