@@ -25,8 +25,8 @@ export async function createActivity(input: unknown) {
   if (typeof type !== 'string' || !type.trim()) {
     throw httpError(400, 'An activity type is required');
   }
-  if (typeof minutes !== 'number' || !Number.isFinite(minutes) || minutes <= 0) {
-    throw httpError(400, 'Activity minutes must be a positive number');
+  if (typeof minutes !== 'number' || !Number.isFinite(minutes) || minutes < 1) {
+    throw httpError(400, 'Activity minutes must be at least 1');
   }
 
   const [user, team] = await Promise.all([User.findById(userId), Team.findById(teamId)]);

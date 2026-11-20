@@ -32,7 +32,7 @@ Record your plan here before editing code.
 - Presentation tier decision: Use the existing shared API client and give each capability page explicit loading, empty, success, and accessible error states.
 - Logic tier decision: Keep request validation and capability behavior in backend services; routes return the documented response envelopes and deliberate 4xx errors.
 - Data tier decision: Enforce required fields and sensible numeric constraints in Mongoose schemas; keep the existing upsert-based seed process non-destructive and idempotent.
-- Activity tracking approach: Validate user/team IDs and existence, require a non-empty type and positive minutes, award one point per minute, and timestamp accepted activities.
+- Activity tracking approach: Validate user/team IDs and existence, require a non-empty type and at least one minute, award one point per minute, and timestamp accepted activities.
 - Team management approach: Require a name and mascot, default members to an empty array, and reject malformed or unknown member IDs.
 - Leaderboard approach: Sum persisted activity points per team, include teams with no points, sort highest-first with stable name tie-breaking, and assign 1-based ranks.
 - Workout suggestions approach: Match a known user's goal to available workout focus, prefer matching recent activity when it gives a better available match, and include a reason; unknown users receive 404.
